@@ -8,6 +8,7 @@
 #include <ESPAsyncWebServer.h>
 #include <AsyncElegantOTA.h>
 #include <EEPROM.h>
+#include <FastBot.h>
 
 AsyncWebServer server(80);
 
@@ -22,6 +23,15 @@ const char *password = "jsCMnJpr";
 const uint32_t port = 1234;
 const char *hostname = "MINI";
 WiFiUDP udp;
+
+String IpAddress2String(const IPAddress& ipAddress);
+void newMsg(FB_msg &msg);
+
+#define BOT_TOKEN "6514408612:AAHjaCKlpjAPjK9jXNL7CsVLWwlgp7QUF38"
+#define DPE_CHAT_ID "213100274"
+//#define CHAT_ID "-1001765861822"
+
+FastBot bot(BOT_TOKEN);
 
 IPAddress ServIP(192, 0, 0, 0);
 
@@ -81,6 +91,10 @@ void setup()
 
   AsyncElegantOTA.begin(&server); // Start AsyncElegantOTA
   server.begin();
+
+  bot.attach(newMsg);
+  //bot.showMenu("STATUS");
+  bot.sendMessage(IpAddress2String(WiFi.localIP()), DPE_CHAT_ID);
 }
 
 void loop()
@@ -182,4 +196,27 @@ void loop()
     udp.printf(buf);
     udp.endPacket();
   }
+}
+
+String IpAddress2String(const IPAddress& ipAddress)
+{
+    return String(ipAddress[0]) + String(".") +
+           String(ipAddress[1]) + String(".") +
+           String(ipAddress[2]) + String(".") +
+           String(ipAddress[3]);
+}
+
+void newMsg(FB_msg &msg)
+{
+  Serial.println("Message from BOT");
+  Serial.println(msg.toString());
+  //bot.setChatID(msg.chatID);
+  //Serial.println(msg.chatID);
+  if (msg.text == "/status")
+  {    
+    bot.sendMessage(IpAddress2String(WiFi.localIP()), msg.chatID);
+    //bot.setChatID("");
+  }
+
+  if (msg.OTA) bot.update();
 }

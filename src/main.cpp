@@ -60,30 +60,29 @@ void setup()
   Serial.println(WiFi.localIP());
   udp.begin(port);
 
-
   MOT_CR1_Winch.setMinDuty(20); // мин. ШИМ  ////////////////////////////////////////////////
-  //MOT_CR1_Winch.reverse(1);      // реверс  ////////////////////////////////////////////////
-  MOT_CR1_Winch.setDeadtime(1);  // deadtime  ////////////////////////////////////////////////
+  // MOT_CR1_Winch.reverse(1);      // реверс  ////////////////////////////////////////////////
+  MOT_CR1_Winch.setDeadtime(1); // deadtime  ////////////////////////////////////////////////
 
   MOT_CR2_Winch.setMinDuty(20); // мин. ШИМ  ////////////////////////////////////////////////
-  //MOT_CR2_Winch.reverse(1);      // реверс  ////////////////////////////////////////////////
-  MOT_CR2_Winch.setDeadtime(1);  // deadtime  ////////////////////////////////////////////////
+  // MOT_CR2_Winch.reverse(1);      // реверс  ////////////////////////////////////////////////
+  MOT_CR2_Winch.setDeadtime(1); // deadtime  ////////////////////////////////////////////////
 
   MOT_CR1_Arm.setMinDuty(20); // мин. ШИМ  ////////////////////////////////////////////////
-  //MOT_CR1_Arm.reverse(1);      // реверс  ////////////////////////////////////////////////
-  MOT_CR1_Arm.setDeadtime(1);  // deadtime  ////////////////////////////////////////////////
+  // MOT_CR1_Arm.reverse(1);      // реверс  ////////////////////////////////////////////////
+  MOT_CR1_Arm.setDeadtime(1); // deadtime  ////////////////////////////////////////////////
 
   MOT_CR2_Arm.setMinDuty(20); // мин. ШИМ  ////////////////////////////////////////////////
-  //MOT_CR2_Arm.reverse(1);      // реверс  ////////////////////////////////////////////////
-  MOT_CR2_Arm.setDeadtime(1);  // deadtime  ////////////////////////////////////////////////
+  // MOT_CR2_Arm.reverse(1);      // реверс  ////////////////////////////////////////////////
+  MOT_CR2_Arm.setDeadtime(1); // deadtime  ////////////////////////////////////////////////
 
   MOT_CR1_Rot.setMinDuty(20); // мин. ШИМ  ////////////////////////////////////////////////
-  //MOT_CR1_Rot.reverse(1);      // реверс  ////////////////////////////////////////////////
-  MOT_CR1_Rot.setDeadtime(1);  // deadtime  ////////////////////////////////////////////////
+  // MOT_CR1_Rot.reverse(1);      // реверс  ////////////////////////////////////////////////
+  MOT_CR1_Rot.setDeadtime(1); // deadtime  ////////////////////////////////////////////////
 
   MOT_CR2_Rot.setMinDuty(20); // мин. ШИМ  ////////////////////////////////////////////////
-  //MOT_CR2_Rot.reverse(1);      // реверс  ////////////////////////////////////////////////
-  MOT_CR2_Rot.setDeadtime(1);  // deadtime  ////////////////////////////////////////////////
+  // MOT_CR2_Rot.reverse(1);      // реверс  ////////////////////////////////////////////////
+  MOT_CR2_Rot.setDeadtime(1); // deadtime  ////////////////////////////////////////////////
 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
             { request->send(200, "text/plain", hostname); });
@@ -130,9 +129,7 @@ void loop()
 
       Serial.println(buf);
 
-      Serial.println(buf);
-
-if (newIP.fromString(buf))
+      if (newIP.fromString(buf))
       {
         if (strcmp(newIP.toString().c_str(), ServIP.toString().c_str()))
         {
@@ -162,7 +159,7 @@ if (newIP.fromString(buf))
 
           switch (ints[3])
           {
-          case 0: // single mode
+          case 0: // single mode Crane 1
             Serial.print("1st crane\t");
             Serial.printf("%d\t%d\t%d\n", rot_val, win_val, arm_val);
             MOT_CR1_Rot.setSpeed(rot_val);
@@ -170,7 +167,7 @@ if (newIP.fromString(buf))
             MOT_CR1_Arm.setSpeed(arm_val);
             break;
 
-          case 1: // single mode
+          case 1: // single mode Crane 2
                   /*
                     Serial.print("2nd crane\t");
                     Serial.printf("%d\t%d\t%d\n", rot_val, win_val, arm_val);
@@ -204,6 +201,9 @@ if (newIP.fromString(buf))
       }
     }
   }
+
+  Serial.printf("State\n\t\tRot1\t%d Arm1\t%d Win1\t%d\n", MOT_CR1_Rot.getState(), MOT_CR1_Winch.getState(), MOT_CR1_Arm.getState());
+  Serial.printf("Speed\n\t\tRot1\t%d Arm1\t%d Win1\t%d\n", MOT_CR1_Rot.getSpeed(), MOT_CR1_Winch.getSpeed(), MOT_CR1_Arm.getSpeed());
 
   static uint32_t tmr = millis();
   if (millis() - tmr > 25)

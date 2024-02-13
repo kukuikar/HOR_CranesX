@@ -25,6 +25,7 @@ WiFiUDP udp;
 
 String IpAddress2String(const IPAddress &ipAddress);
 void newMsg(FB_msg &msg);
+void stopCrane(int CraneNum);
 
 #define BOT_TOKEN "6543361977:AAHLvqCa98ZLrGzjngj86su23isPpzkaRs4"
 #define DPE_CHAT_ID "213100274"
@@ -160,6 +161,8 @@ void loop()
           MOT_CR1_Rot.setSpeed(rot_val);
           MOT_CR1_Winch.setSpeed(win_val);
           MOT_CR1_Arm.setSpeed(arm_val);
+
+          stopCrane(2);
           break;
 
         case 1: // single mode Crane 2
@@ -167,6 +170,8 @@ void loop()
           MOT_CR2_Rot.setSpeed(rot_val);
           MOT_CR2_Winch.setSpeed(win_val);
           MOT_CR2_Arm.setSpeed(arm_val);
+
+          stopCrane(1);
           break;
 
         case 2: // mirror mode
@@ -218,4 +223,21 @@ void newMsg(FB_msg &msg)
 
   if (msg.OTA)
     bot.update();
+}
+
+void stopCrane(int CraneNum)
+{
+  switch (CraneNum)
+  {
+  case 1:
+    MOT_CR1_Rot.setSpeed(0);
+    MOT_CR1_Winch.setSpeed(0);
+    MOT_CR1_Arm.setSpeed(0);
+    break;
+  case 2:
+    MOT_CR2_Rot.setSpeed(0);
+    MOT_CR2_Winch.setSpeed(0);
+    MOT_CR2_Arm.setSpeed(0);
+    break;
+  }
 }

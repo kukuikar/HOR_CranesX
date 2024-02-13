@@ -195,7 +195,7 @@ void loop()
 
         case 2: // mirror mode
           Serial.println("Mirror Mode");
-          MOT_CR1_Rot.setSpeed(-1 * rot_val);
+          MOT_CR1_Rot.setSpeed(rot_val);
           MOT_CR1_Winch.setSpeed(win_val);
           MOT_CR1_Arm.setSpeed(arm_val);
 

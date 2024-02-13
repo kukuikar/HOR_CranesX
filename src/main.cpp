@@ -115,14 +115,6 @@ void setup()
 
 void loop()
 {
-  //MOT_CR1_Rot.tick();
-  //MOT_CR1_Winch.tick();
-  //MOT_CR1_Arm.tick();
-
-  //MOT_CR2_Rot.tick();
-  //MOT_CR2_Winch.tick();
-  //MOT_CR2_Arm.tick();
-
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
@@ -239,8 +231,7 @@ void newMsg(FB_msg &msg)
     bot.sendMessage("Cranes IP" + IpAddress2String(WiFi.localIP()), msg.chatID);
     // bot.setChatID("");
   }
-
-  if (msg.OTA)
+  else if (msg.OTA)
     bot.update();
 }
 

@@ -96,6 +96,14 @@ void setup()
   // MOT_CR2_Rot.reverse(1);      // реверс  ////////////////////////////////////////////////
   // MOT_CR2_Rot.setDeadtime(1); // deadtime  ////////////////////////////////////////////////
 
+  MOT_CR1_Winch.setMode(FORWARD);
+  MOT_CR1_Arm.setMode(FORWARD);
+  MOT_CR1_Rot.setMode(FORWARD);
+
+  MOT_CR2_Winch.setMode(FORWARD);
+  MOT_CR2_Arm.setMode(FORWARD);
+  MOT_CR2_Rot.setMode(FORWARD);
+
   //server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) { request->send(200, "text/plain", hostname); });
 
   //AsyncElegantOTA.begin(&server); // Start AsyncElegantOTA

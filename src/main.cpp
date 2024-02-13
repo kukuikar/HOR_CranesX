@@ -11,7 +11,7 @@
 
 AsyncWebServer server(80);
 
-// #define MKD_Guest 123
+// #define MKD_Guest 123 456
 #ifdef MKD_Guest
 const char *ssid = "MKD-Guest";
 const char *password = "123Qweasd";

@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <GyverMotor2.h>
+#include <GyverMotor.h>
 #include <GParser.h>
 #include <WiFiUdp.h>
 #include <WiFi.h>
@@ -34,7 +34,7 @@ void stopCrane(int CraneNum);
 FastBot bot(BOT_TOKEN);
 
 IPAddress ServIP(192, 0, 0, 0);
-
+/*
 // Лебедка
 GMotor2<DRIVER2WIRE> MOT_CR1_Winch(23, 22);
 GMotor2<DRIVER2WIRE> MOT_CR2_Winch(32, 33);
@@ -44,6 +44,17 @@ GMotor2<DRIVER2WIRE> MOT_CR2_Arm(25, 26);
 // Поворот
 GMotor2<DRIVER2WIRE> MOT_CR1_Rot(17, 16);
 GMotor2<DRIVER2WIRE> MOT_CR2_Rot(27, 13);
+*/
+
+// Лебедка
+GMotor MOT_CR1_Winch(DRIVER2WIRE, 23, 22);
+GMotor MOT_CR2_Winch(DRIVER2WIRE, 32, 33);
+// Стрела
+GMotor MOT_CR1_Arm(DRIVER2WIRE, 21, 19);
+GMotor MOT_CR2_Arm(DRIVER2WIRE, 25, 26);
+// Поворот
+GMotor MOT_CR1_Rot(DRIVER2WIRE, 17, 16);
+GMotor MOT_CR2_Rot(DRIVER2WIRE, 27, 13);
 
 void setup()
 {
@@ -96,13 +107,13 @@ void setup()
 
 void loop()
 {
-  MOT_CR1_Rot.tick();
-  MOT_CR1_Winch.tick();
-  MOT_CR1_Arm.tick();
+  //MOT_CR1_Rot.tick();
+  //MOT_CR1_Winch.tick();
+  //MOT_CR1_Arm.tick();
 
-  MOT_CR2_Rot.tick();
-  MOT_CR2_Winch.tick();
-  MOT_CR2_Arm.tick();
+  //MOT_CR2_Rot.tick();
+  //MOT_CR2_Winch.tick();
+  //MOT_CR2_Arm.tick();
 
   while (WiFi.status() != WL_CONNECTED)
   {

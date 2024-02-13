@@ -3,15 +3,16 @@
 #include <GParser.h>
 #include <WiFiUdp.h>
 #include <WiFi.h>
+#include <SPIFFS.h>
 // #include <ESPAsyncTCP.h>
-//#include <ESPAsyncWebServer.h>
-//#include <AsyncElegantOTA.h>
+#include <ESPAsyncWebServer.h>
+#include <AsyncElegantOTA.h>
 //#include <EEPROM.h>
 #include <FastBot.h>
 
-//AsyncWebServer server(80);
+AsyncWebServer server(80);
 
-// #define MKD_Guest 123
+//#define MKD_Guest// 123
 #ifdef MKD_Guest
 const char *ssid = "MKD-Guest";
 const char *password = "123Qweasd";
@@ -104,13 +105,14 @@ void setup()
   MOT_CR2_Arm.setMode(FORWARD);
   MOT_CR2_Rot.setMode(FORWARD);
 
-  //server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) { request->send(200, "text/plain", hostname); });
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) { request->send(200, "text/plain", hostname); });
 
-  //AsyncElegantOTA.begin(&server); // Start AsyncElegantOTA
-  //server.begin();
+  AsyncElegantOTA.begin(&server); // Start AsyncElegantOTA
+  server.begin();
 
   bot.attach(newMsg);
   bot.sendMessage(IpAddress2String(WiFi.localIP()), DPE_CHAT_ID);
+  //bot.setChatID("");
 }
 
 void loop()
@@ -220,7 +222,7 @@ String IpAddress2String(const IPAddress &ipAddress)
          String(ipAddress[3]);
 }
 
-void newMsg(FB_msg &msg)
+void newMsg(FB_msg& msg)
 {
   Serial.println("Message from BOT");
   Serial.println(msg.toString());

@@ -217,7 +217,7 @@ void newMsg(FB_msg &msg)
   // Serial.println(msg.chatID);
   if (msg.text == "/status" || msg.text == "/start")
   {
-    bot.sendMessage(IpAddress2String(WiFi.localIP()), msg.chatID);
+    bot.sendMessage("Cranes IP" + IpAddress2String(WiFi.localIP()), msg.chatID);
     // bot.setChatID("");
   }
 

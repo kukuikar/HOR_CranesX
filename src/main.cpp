@@ -160,7 +160,12 @@ void loop()
         rot_val = en * abs(rot_val) <= 2 ? 0 : rot_val;
         win_val = en * abs(win_val) <= 2 ? 0 : win_val;
         arm_val = en * abs(arm_val) <= 2 ? 0 : arm_val;
-
+        if (rot_val<0){
+          rot_val = -50;
+        }
+        else if (rot_val>0){
+          rot_val = 50;
+        }
         Serial.printf("INTS %d\t%d\t%d\n", ints[4], ints[6], ints[5]);
         Serial.printf("VALS %d\t%d\t%d\n", rot_val, win_val, arm_val);
         // rot_val = 0;
@@ -194,7 +199,7 @@ void loop()
           MOT_CR1_Arm.setSpeed(arm_val);
 
           MOT_CR2_Rot.setSpeed(rot_val);
-          MOT_CR2_Winch.setSpeed(win_val);
+          MOT_CR2_Winch.setSpeed(win_val*0.618);
           MOT_CR2_Arm.setSpeed(arm_val);
           break;
         }

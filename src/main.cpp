@@ -195,12 +195,16 @@ void loop()
 
         case 2: // mirror mode
           Serial.println("Mirror Mode");
+
+          float orientation;
+          orientation = (win_val<0)?  0.586 : ((win_val>0)? 0.811: 0);
+
           MOT_CR1_Rot.setSpeed(rot_val);
           MOT_CR1_Winch.setSpeed(win_val);
           MOT_CR1_Arm.setSpeed(arm_val);
 
           MOT_CR2_Rot.setSpeed(rot_val);
-          MOT_CR2_Winch.setSpeed(win_val*0.841);
+          MOT_CR2_Winch.setSpeed(win_val*orientation);
           MOT_CR2_Arm.setSpeed(arm_val);
           break;
         }

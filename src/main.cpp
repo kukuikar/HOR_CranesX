@@ -17,8 +17,8 @@ AsyncWebServer server(80);
 const char *ssid = "MKD-Guest";
 const char *password = "123Qweasd";
 #else
-const char *ssid = "Keenetic-1649";
-const char *password = "jsCMnJpr";
+const char *ssid = "MKD_HORIZON";
+const char *password = "123Qweasd";
 #endif
 const uint32_t port = 1234;
 const char *hostname = "MINI";
